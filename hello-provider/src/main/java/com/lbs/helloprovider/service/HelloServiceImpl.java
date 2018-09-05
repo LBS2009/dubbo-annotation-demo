@@ -14,6 +14,8 @@ public class HelloServiceImpl implements HelloService {
 
     @Override
     public String hello(String name) {
+        System.out.println("hello provider 被调用 ...");
+        int i = 10 / 0;
         return "hello " + name;
     }
 }

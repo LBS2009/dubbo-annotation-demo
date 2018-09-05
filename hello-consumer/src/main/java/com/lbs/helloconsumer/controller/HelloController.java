@@ -1,7 +1,7 @@
 package com.lbs.helloconsumer.controller;
 
-import com.lbs.helloconsumer.service.RemoteHelloService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.lbs.HelloService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-    @Autowired
-    private RemoteHelloService helloService;
+    @Reference(
+            stubevent = true,
+            stub = "com.lbs.helloconsumer.service.HelloServiceStubImpl"
+            //mock = "com.lbs.helloconsumer.service.HelloServiceMockImpl"
+    )
+    private HelloService helloService;
 
     @GetMapping("/hello")
     public String hello(@RequestParam String name) {
